@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/e4nthony/NetworkTech2022/issues"
   },
-  "homepage": "https://github.com/e4nthony/NetworkTech2022/tree/homework1#readme"
+  "homepage": "https://github.com/e4nthony/NetworkTech2022/tree/homework1#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
