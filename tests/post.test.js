@@ -36,16 +36,16 @@ describe("Posts Tests", ()=>{
         const response = await request(app).get('/post')
 
         expect(response.statusCode).toEqual(200)
-        expect(response.body[0].message).toEqual(newPostMessage)
-        expect(response.body[0].sender).toEqual(newPostSender)
+        expect(response.body[0].message).toEqual(Post1_MessageUpdated)
+        expect(response.body[0].sender).toEqual(Post1_Sender)
     })
 
     test("get post by id",async ()=>{
         const response = await request(app).get('/post/' + Post1_ID)
 
         expect(response.statusCode).toEqual(200)
-        expect(response.body.message).toEqual(newPostMessage)
-        expect(response.body.sender).toEqual(newPostSender)
+        expect(response.body.message).toEqual(Post1_MessageUpdated)
+        expect(response.body.sender).toEqual(Post1_Sender)
     })
 
     test("get post by wrong id fails",async ()=>{
@@ -55,34 +55,34 @@ describe("Posts Tests", ()=>{
     })
 
     test("get post by sender",async ()=>{
-        const response = await request(app).get('/post?sender=' + newPostSender)
+        const response = await request(app).get('/post?sender=' + Post1_Sender)
 
         expect(response.statusCode).toEqual(200)
-        expect(response.body[0].message).toEqual(newPostMessage)
-        expect(response.body[0].sender).toEqual(newPostSender)
+        expect(response.body[0].message).toEqual(Post1_MessageUpdated)
+        expect(response.body[0].sender).toEqual(Post1_Sender)
     })
 
     test("update post by ID",async ()=>{
         let response = await request(app).put('/post/' + Post1_ID).send({
             "message": Post1_MessageUpdated,
-            "sender": newPostSender
+            "sender": Post1_Sender
         })
 
         expect(response.statusCode).toEqual(200)
         expect(response.body.message).toEqual(Post1_MessageUpdated)
-        expect(response.body.sender).toEqual(newPostSender)
+        expect(response.body.sender).toEqual(Post1_Sender)
 
         //--- 
         response = await request(app).get('/post/' + Post1_ID)
 
         expect(response.statusCode).toEqual(200)
         expect(response.body.message).toEqual(Post1_MessageUpdated)
-        expect(response.body.sender).toEqual(newPostSender)
+        expect(response.body.sender).toEqual(Post1_Sender)
 
         //--- 
         response = await request(app).put('/post/new1').send({
             "message": Post1_MessageUpdated,
-            "sender": newPostSender
+            "sender": Post1_Sender
         })
         expect(response.statusCode).toEqual(400)
 
@@ -92,7 +92,7 @@ describe("Posts Tests", ()=>{
         })
         expect(response.statusCode).toEqual(200)
         expect(response.body.message).toEqual(Post1_MessageUpdated)
-        expect(response.body.sender).toEqual(newPostSender)
+        expect(response.body.sender).toEqual(Post1_Sender)
     })
 
 })
