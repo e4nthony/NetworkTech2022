@@ -26,8 +26,8 @@ describe("Posts Tests", ()=>{
         })
 
         expect(response.statusCode).toEqual(200)
-        expect(response.body.message).toEqual(newPostMessage)
-        expect(response.body.sender).toEqual(newPostSender)
+        expect(response.body.message).toEqual(Post1_MessageUpdated)
+        expect(response.body.sender).toEqual(Post1_Sender)
 
         Post1_ID = response.body._id
     })
