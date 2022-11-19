@@ -9,4 +9,5 @@ router.get('/:id',post.getPostById)
 
 router.post('/',post.addNewPost)
 
+
 module.exports = router
