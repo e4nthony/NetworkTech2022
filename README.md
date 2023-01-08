@@ -4,7 +4,7 @@
 
 Requirements:   
 -install Node.js    
--install Mongo DB Compass(run database (Mongo DB Compass))   
+-install Mongo DB Compass( & run database )   
 
 Start program on Windows using git-bash terminal:   
 
