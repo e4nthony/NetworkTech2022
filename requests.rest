@@ -10,9 +10,9 @@ GET http://localhost:4000/index
 ### empty post request (err)
 POST http://localhost:4000/post
 
-### post request with JSON Body
+### post request with JSON Body (new)
 POST http://localhost:4000/post
-Content-Type: application/json
+Content-Type: application/json 
 
 {
     "message": "this is my new message",
@@ -24,6 +24,30 @@ POST http://localhost:4000/post
 Content-Type: application/json
 
 {
-    "message": "this is my neughbor's message",
+    "message": "this is my neighbor's message",
     "sender":"811000"
 }
+
+###
+POST http://localhost:4000/post
+Content-Type: application/json
+
+{
+    "message": "this is my cat's messageaedkfrgru.akerhv.46gc789gyaewervdfvradrv/larog",
+    "sender":"047000"
+}
+
+### get all posts
+GET http://localhost:4000/post
+Content-Type: application/json 
+
+### post update request by id (ERROR example)
+POST http://localhost:4000/post/63bb350affdcd210451b5929
+
+{
+    "message": "this is my allien's message",
+    "sender":"001100"
+}
+
+### get post by id (WORKS)
+GET http://localhost:4000/post/63bb350affdcd210451b5929
