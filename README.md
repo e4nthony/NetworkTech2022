@@ -4,5 +4,7 @@
 
 -starting program on windows using git bash terminal:
 (run database (Mongo DB Compass)) 
-nvm install 16.15.0
-npm start
+```sh
+nvm install 16.15.0 
+npm start   
+```
