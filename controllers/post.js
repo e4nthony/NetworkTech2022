@@ -41,7 +41,7 @@ const getAllPosts = async (req,res,next)=>{
 
 
 const addNewPost = async (req,res,next)=>{
-    console.log(req.body)
+    console.log("addNewPost' request body:" + req.body)
 
     const post = new Post({
         message: req.body.message,
