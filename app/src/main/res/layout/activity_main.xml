@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E40A1845"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/menu_tittle_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tic Tac Toe"
+        android:textColor="#4DD0F1"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.174" />
+
+    <Button
+        android:id="@+id/menu_start_button"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:text="Start Game"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/menu_tittle_tv"
+        app:layout_constraintStart_toStartOf="@+id/menu_tittle_tv"
+        app:layout_constraintTop_toBottomOf="@+id/menu_tittle_tv"
+        app:layout_constraintVertical_bias="0.167" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
