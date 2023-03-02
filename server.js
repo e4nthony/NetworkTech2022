@@ -11,6 +11,9 @@ const db = mongoose.connection
 db.on('error',error=>{console.error('Failed to connect to MongoDB: '+error)})
 db.once('open',()=>{console.log('Connected to MongoDB.')})
 
+//Make files in folder "public" accessible via url  //todo 
+app.use('/public', express.static('public'))
+
 const postRouter = require('./routes/post_route.js')
 app.use('/post',postRouter)
 
