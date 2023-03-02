@@ -51,7 +51,7 @@ const addNewPost = async (req:Request,res:Response)=>{
     })
 
     try{
-        let newPost = await post.save()
+        const newPost = await post.save()
         console.log("save post in db")
 
         res.status(statusOK).send(newPost)

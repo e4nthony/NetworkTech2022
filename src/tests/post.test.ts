@@ -6,13 +6,13 @@ import Post from '../models/post_model'
 
 const Post1_Message = 'post 1 message 1 - first'
 const Post1_Sender  = '000111'
-var   Post1_ID      = null
+let   Post1_ID      = null
 const Post1_UpdatedMessage = 'post 1 message 2 - second'
 
 
 const Post2_Message = 'post 2 message 1 - first'
 const Post2_Sender  = '000222'
-var   Post2_ID      = null
+let   Post2_ID      = null
 
 
 /**
