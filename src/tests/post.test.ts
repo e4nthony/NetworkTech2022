@@ -1,7 +1,7 @@
-const request = require('supertest')
-const app = require('../server')
-const mongoose = require('mongoose')
-const Post = require('../models/post_model')
+import request from 'supertest'
+import app from '../server'
+import mongoose from 'mongoose'
+import Post from '../models/post_model'
 
 
 const Post1_Message = 'post 1 message 1 - first'
@@ -96,7 +96,7 @@ describe("Test of post actions", ()=>{
         expect(response.body[0].sender).toEqual(Post1_Sender)
     })
 
-    ////TODO make it work
+    // //TODO make it work
     // test("update post by ID",async ()=>{
     //     let response = await request(app).put('/post/' + Post1_ID).send({
     //         "message": Post1_UpdatedMessage,
@@ -111,22 +111,22 @@ describe("Test of post actions", ()=>{
     //     response = await request(app).get('/post/' + Post1_ID)
 
     //     expect(response.statusCode).toEqual(200)
-    //     expect(response.body.message).toEqual(Post1_MessageUpdated)
+    //     expect(response.body.message).toEqual(Post1_UpdatedMessage)
     //     expect(response.body.sender).toEqual(Post1_Sender)
 
     //     //--- 
     //     response = await request(app).put('/post/new1').send({
-    //         "message": Post1_MessageUpdated,
+    //         "message": Post1_UpdatedMessage,
     //         "sender": Post1_Sender
     //     })
     //     expect(response.statusCode).toEqual(400)
 
     //     //--- 
     //     response = await request(app).put('/post/' + Post1_ID).send({
-    //         "message": Post1_MessageUpdated,
+    //         "message": Post1_UpdatedMessage,
     //     })
     //     expect(response.statusCode).toEqual(200)
-    //     expect(response.body.message).toEqual(Post1_MessageUpdated)
+    //     expect(response.body.message).toEqual(Post1_UpdatedMessage)
     //     expect(response.body.sender).toEqual(Post1_Sender)
     // })
 

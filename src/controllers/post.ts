@@ -2,10 +2,12 @@ const statusOK = 200
 const statusERR = 400
 
 
-const Post = require('../models/post_model')
+// import { Expression } from 'mongoose'
+// import Express from 'express'
+import { Request,Response } from 'express'
+import Post from '../models/post_model'
 
-
-const getPostById = async (req,res,next)=>{
+const getPostById = async (req: any,res: any)=>{
     console.log(req.params.id)
 
     try{
@@ -19,7 +21,7 @@ const getPostById = async (req,res,next)=>{
 }
 
 
-const getAllPosts = async (req,res,next)=>{
+const getAllPosts = async (req:Request,res:Response)=>{
     try{
         let posts = {}
         if (req.query.sender == null)
@@ -40,7 +42,7 @@ const getAllPosts = async (req,res,next)=>{
 
 
 
-const addNewPost = async (req,res,next)=>{
+const addNewPost = async (req:Request,res:Response)=>{
     console.log("addNewPost' request body:" + req.body)
 
     const post = new Post({
@@ -49,7 +51,7 @@ const addNewPost = async (req,res,next)=>{
     })
 
     try{
-        newPost = await post.save()
+        let newPost = await post.save()
         console.log("save post in db")
 
         res.status(statusOK).send(newPost)
@@ -61,14 +63,14 @@ const addNewPost = async (req,res,next)=>{
 }
 
 
-const updatePost = async (req,res,next)=>{
+const putPostById = async (req:Request,res:Response)=>{
     console.log(req.body)
 
     try{
-        const post = await Post.findByIdAndUpdate(req.params.id)
+        const updatedPost = await Post.findByIdAndUpdate(req.params.id)
         
         console.log("post updated in db")
-        res.status(statusOK).send(newPost)
+        res.status(statusOK).send(updatedPost)
     }
     catch (err){
         console.log("failed to save post in DB (addNewPost())")
@@ -76,37 +78,7 @@ const updatePost = async (req,res,next)=>{
     }
 }
 
-module.exports = {getAllPosts, addNewPost, getPostById}
+
+export = {getAllPosts, addNewPost, getPostById, putPostById}
 
 
-
-////old_v2:
-// const getAllPosts = (req,res,next)=>{
-//     res.send('get all posts')
-// }
-
-// const addNewPost = (req,res,next)=>{
-//     res.send('add new post')
-// }
-
-// module.exports = {getAllPosts, addNewPost}
-
-
-
-////old_v1:
-// const express = require('express')
-// const router = express.Router()
-
-// router.get('/',(req,res)=>{
-//     res.send('get all posts')
-// })
-
-// router.get('/index',(req,res)=>{
-//     res.send('get index')
-// })
-
-// router.post('/',(req,res)=>{
-//     res.send('add a new post')
-// })
-
-// module.exports = router
