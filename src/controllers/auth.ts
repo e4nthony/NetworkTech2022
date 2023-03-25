@@ -1,5 +1,14 @@
-const statusOK = 200
-const statusERROR = 400
+/** status:
+ * 1XX — Informational
+ * 2XX — Success
+ * 3XX — Redirection
+ * 4XX — Client Error
+ * 5XX — Server Error
+ */
+const statusOK = 200        //  OK
+const statusERROR = 400     //  Bad Request
+//const statusUnauthorized = 401     //  Unauthorized //use with login
+//const statusNotFound = 404     
 
 import User from '../models/user_model' 
 import { NextFunction, Request,Response } from 'express'
@@ -59,7 +68,7 @@ const register = async (req: Request, res: Response) => {
         // })
     }catch(err){  // expected: server lost connection with db
         //console.log(req.body)
-        console.log("error: " + err);
+        console.log('error: ' + err);
         return sendError(res, 'Unexpected error');
     }
 }
@@ -83,15 +92,15 @@ const login = async (req: Request, res: Response) => {
 
     //  check if email in use:
     try{
-        const user = await User.findOne({'email': email});    //findOne default func.
+        const user = await User.findOne({'email': email});    //findOne() default func.
         if (user == null){
-            return sendError(res, 'Invalid email or password') //   Email not registered/found
+            return sendError(res, 'Invalid email or password'); //   Email not registered/found
         }
 
         //  password check:
         const matchResult: Boolean = await bcrypt.compare(password, user.password)
         if (matchResult == false){
-            return sendError(res, 'Invalid email or password') //   Wrong password
+            return sendError(res, 'Invalid email or password'); //   Wrong password
         }
 
         return res.status(statusOK).send({
@@ -101,13 +110,13 @@ const login = async (req: Request, res: Response) => {
         })
     }catch(err){  // expected: server lost connection with db
         //console.log(req.body)
-        console.log("error: " + err);
+        console.log('error: ' + err);
         return sendError(res, 'Unexpected error');
     }
 }
 
 const logout = async (req: Request, res: Response) => {
-    res.status(statusERROR).send({'error':"Not implemented"});
+    res.status(statusERROR).send({'error': 'Not implemented'});
 }
 
 
