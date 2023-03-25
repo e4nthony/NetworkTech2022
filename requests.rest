@@ -94,4 +94,9 @@ Content-Type: application/json
 }
 
 ### logout request
-POST http://localhost:4000/auth/logout
+POST http://localhost:4000/auth/logout 
+Content-Type: application/json
+
+{
+    "email": "example@gmail.com"
+}
