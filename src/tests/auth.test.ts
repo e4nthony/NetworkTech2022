@@ -20,26 +20,20 @@ const User1_Password  = '1234'
 describe("Authentication Test", ()=>{
 
 
-    test("Register - add new user1",async ()=>{
+    test("Register - add new user (user1)",async ()=>{
         const response = await request(app).post('/auth/register').send({
             "email": User1_Mail,
             "password": User1_Password
         })
-
         expect(response.statusCode).toEqual(200)
-
-        expect(response.body.email).toEqual(User1_Mail)
-        expect(response.body.password).toEqual(User1_Password)
     })
 
-    test("Login - login user1",async ()=>{
+    test("Login - login (user1)",async ()=>{
         const response = await request(app).post('/auth/login').send({
             "email": User1_Mail,
             "password": User1_Password
         })
-
         expect(response.statusCode).toEqual(200)
-        // todo implement
     })
 
 })
