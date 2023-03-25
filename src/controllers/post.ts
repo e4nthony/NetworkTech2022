@@ -1,5 +1,5 @@
 const statusOK = 200
-const statusERR = 400
+const statusERROR = 400
 
 
 // import { Expression } from 'mongoose'
@@ -16,7 +16,7 @@ const getPostById = async (req: any,res: any)=>{
     }
     catch(err){
         console.log("failed to send answer getPostById()")
-        res.status(statusERR).send({'error':"fail to get posts from db"})
+        res.status(statusERROR).send({'error':"fail to get posts from db"})
     }
 }
 
@@ -36,7 +36,7 @@ const getAllPosts = async (req:Request,res:Response)=>{
     }
     catch(err){
         console.log("failed to send answer getAllPosts()")
-        res.status(statusERR).send({'error':"fail to get posts from db"})
+        res.status(statusERROR).send({'error':"fail to get posts from db"})
     }
 }
 
@@ -58,7 +58,7 @@ const addNewPost = async (req:Request,res:Response)=>{
     }
     catch (err){
         console.log("failed to save post in DB (addNewPost())")
-        res.status(statusERR).send({'error': 'fail adding new post to db'})
+        res.status(statusERROR).send({'error': 'fail adding new post to db'})
     }
 }
 
@@ -74,7 +74,7 @@ const putPostById = async (req:Request,res:Response)=>{
     }
     catch (err){
         console.log("failed to save post in DB (addNewPost())")
-        res.status(statusERR).send({'error': 'fail adding new post to db'})
+        res.status(statusERROR).send({'error': 'fail adding new post to db'})
     }
 }
 
