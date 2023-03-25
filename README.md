@@ -8,7 +8,7 @@ Requirements:
 
 Start program on Windows using git-bash terminal:   
 
-```
-nvm install 16.15.0 
-npm start   
-```
+\- (Install NVM) <sub>// nvm I have used: https://github.com/coreybutler/nvm-windows</sub>\
+\- `nvm install 16.15.0`\
+\- `npm start`
+
