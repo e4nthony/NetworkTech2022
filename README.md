@@ -4,11 +4,11 @@
 
 Requirements:   
 -install Node.js    
--install Mongo DB Compass( & run database )   
+-install Mongo DB, Mongo DB Compass( & run database )   
 
 Start program on Windows using git-bash terminal:   
 
-```sh
+```
 nvm install 16.15.0 
 npm start   
 ```
