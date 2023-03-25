@@ -36,4 +36,12 @@ describe("Authentication Test", ()=>{
         expect(response.statusCode).toEqual(200)
     })
 
+    test("Logout - logout (user1)",async ()=>{
+        const response = await request(app).post('/auth/logout').send({
+            "email": User1_Mail
+        })
+        expect(response.statusCode).toEqual(200)
+    })
+
+
 })
