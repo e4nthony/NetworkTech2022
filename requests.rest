@@ -75,10 +75,23 @@ Content-Type: application/json
 }
 
 #--------------------------TEST AREA-------------------------------end
+### register request
+POST http://localhost:4000/auth/register
+Content-Type: application/json
 
+{
+    "email": "example@gmail.com",
+    "password": "1234"
+}
 
 ### login request
 POST http://localhost:4000/auth/login
+Content-Type: application/json
 
-### reg request
-POST http://localhost:4000/auth/register
+{
+    "email": "example@gmail.com",
+    "password": "1234"
+}
+
+### logout request
+POST http://localhost:4000/auth/logout
