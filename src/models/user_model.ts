@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    refresh_tokens: {
+    refresh_tokens: {   //  multiple tokens for multiple devices
         type: [String]
     }
 });
