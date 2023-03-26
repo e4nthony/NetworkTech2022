@@ -1,21 +1,23 @@
 import request from 'supertest'
 import app from '../server'
 import mongoose from 'mongoose'
-// import auth from '../models/auth_model' //todo
+import User from '../models/user_model'
 // import Post from '../models/post_model' //todo check if needed
 
 const User1_Mail = 'example@gmail.com';
 const User1_Password  = '1221ABcd!';
 
-// beforeAll(async ()=>{    //todo modify
-//     // await Post.remove()
-// })
+// clear the DB
+ beforeAll(async ()=>{
+    await User.remove()
+})
 
-
-// afterAll(async ()=>{     //todo modify
-//     // await mongoose.connection.close()
-// })
-
+// clear the DB
+afterAll(async ()=>{
+    await User.remove()
+    // await mongoose.connection.close() //?
+    mongoose.connection.close()
+})
 
 describe("Authentication Test", () => {
 
