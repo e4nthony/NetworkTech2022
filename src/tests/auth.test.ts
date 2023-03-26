@@ -1,22 +1,24 @@
-import request from 'supertest'
-import app from '../server'
-import mongoose from 'mongoose'
-import User from '../models/user_model'
-// import Post from '../models/post_model' //todo check if needed
+import request from 'supertest';
+import app from '../server';
+import mongoose from 'mongoose';
+import User from '../models/user_model';
+import Post from '../models/post_model';
 
 const User1_Mail = 'example@gmail.com';
 const User1_Password  = '1221ABcd!';
 
 // clear the DB
- beforeAll(async ()=>{
-    await User.remove()
+ beforeAll(async () => {
+    await User.remove();
+    await Post.remove();
 })
 
 // clear the DB
-afterAll(async ()=>{
-    await User.remove()
-    // await mongoose.connection.close() //?
-    mongoose.connection.close()
+afterAll(async () => {
+    await User.remove();
+    await Post.remove();
+    // await mongoose.connection.close(); //?
+    mongoose.connection.close();
 })
 
 describe("Authentication Test", () => {
