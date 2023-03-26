@@ -7,8 +7,8 @@ import Post from '../models/post_model';
 const User1_Mail = 'example@gmail.com';
 const User1_Password = '1221ABcd!';
 
-let accessToken = ''
-let refreshToken = ''
+let accessToken = '';
+let refreshToken = '';
 
 // clear the DB
 beforeAll(async () => {
@@ -27,7 +27,7 @@ afterAll(async () => {
 describe("Authentication Test", () => {
 
 
-    test("Register - add new user (user1)",async () => {
+    test("Register - add new user (user1)", async () => {
         const response = await request(app).post('/auth/register').send({
             "email": User1_Mail,
             "password": User1_Password
@@ -35,7 +35,7 @@ describe("Authentication Test", () => {
         expect(response.statusCode).toEqual(200); //no errors
     })
 
-    test("Login - (user1) Valid password",async () => {
+    test("Login - (user1) Valid password", async () => {
         const response = await request(app).post('/auth/login').send({
             "email": User1_Mail,
             "password": User1_Password
@@ -49,7 +49,7 @@ describe("Authentication Test", () => {
         expect(refreshToken).not.toBeNull();
     })
 
-    test("Login - (user1) Invalid password",async () => {
+    test("Login - (user1) Invalid password", async () => {
         const response = await request(app).post('/auth/login').send({
             "email": User1_Mail,
             "password": User1_Password + 'abc'
@@ -60,7 +60,7 @@ describe("Authentication Test", () => {
         expect(accessToken_temp).toBeUndefined();
     })
 
-    test("Logout - logout (user1)",async () => {
+    test("Logout - logout (user1)", async () => {
         const response = await request(app).post('/auth/logout').send({
             "email": User1_Mail
         })

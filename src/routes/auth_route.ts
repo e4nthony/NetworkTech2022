@@ -18,4 +18,4 @@ router.post(
     Auth.logout
 );
 
-export = router
+export = router;
