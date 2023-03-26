@@ -89,6 +89,21 @@ describe("Authentication Test", () => {
     })
     */
 
+    test("test refresh token", async () => {
+        let response = await request(app).get('/auth/refresh_auth').set('Authorization', 'JWT' + ' ' + refreshToken);
+        expect(response.statusCode).toEqual(200);
+
+        accessToken = response.body.accessToken;
+        expect(accessToken).not.toBeNull();
+
+        refreshToken = response.body.refreshToken;
+        expect(refreshToken).not.toBeNull();
+
+        response = await request(app).get('/post').set('Authorization', 'JWT' + ' ' + accessToken);
+        expect(response.statusCode).toEqual(200);
+
+    })
+
 
     test("Logout test", async () => {
         const response = await request(app).get('/auth/logout').set('Authorization', 'JWT' + ' ' + refreshToken)
