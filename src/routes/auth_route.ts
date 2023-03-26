@@ -175,7 +175,7 @@ router.get(
  *
  */
 router.get(
-    '/refresh_auth',
+    '/refresh',
     Auth.refresh
 );
 

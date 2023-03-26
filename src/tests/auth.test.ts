@@ -90,7 +90,7 @@ describe("Authentication Test", () => {
     */
 
     test("test refresh token", async () => {
-        let response = await request(app).get('/auth/refresh_auth').set('Authorization', 'JWT' + ' ' + refreshToken);
+        let response = await request(app).get('/auth/refresh').set('Authorization', 'JWT' + ' ' + refreshToken);
         expect(response.statusCode).toEqual(200);
 
         accessToken = response.body.accessToken;
