@@ -7,7 +7,7 @@
  */
 const statusOK = 200        //  OK
 const statusERROR = 400     //  Bad Request
-//const statusUnauthorized = 401     //  Unauthorized //use with login
+//const statusUnauthorized = 401     //  Unauthorized Access //use with login
 //const statusNotFound = 404     
 
 import User from '../models/user_model' 
