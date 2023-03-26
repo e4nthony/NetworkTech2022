@@ -16,6 +16,10 @@ import { Request, Response, NextFunction } from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+type TokenInfo = {
+    id: string
+}
+
 function sendError(res: Response, error_msg: string) {
     res.status(statusERROR).send({ 'error': error_msg });
 }
@@ -26,7 +30,7 @@ async function generateTokens(userId: string) {
         // {'mail': },
         { 'id': userId },
         process.env.ACCESS_TOKEN_SECRET,
-        { 'expiresIn': process.env.JWT_TOKEN_EXPIRATION }
+        { 'expiresIn': process.env.JWT_TOKEN_EXPIRATION }   //  this token will expire
     )
 
     const refreshToken = jwt.sign(
@@ -49,7 +53,7 @@ function getTokenFromRequest(req: Request): string {
     if (authHeader == null)
         return null;
 
-    return authHeader.split(' ')[1]; //  gets first string in "dictionary"
+    return authHeader.split(' ')[1]; //  gets first string in "dictionary"/JSON
 }
 
 
@@ -137,13 +141,13 @@ const login = async (req: Request, res: Response) => {
 
         const tokens = await generateTokens(user._id.toString());
 
-        if (user.refresh_tokens == null)
-            user.refresh_tokens = [tokens.refreshToken];
+        if (user.refresh_tokens == null)    // if no r_tokens in DB
+            user.refresh_tokens = [tokens.refreshToken];    //make one
         else
-            user.refresh_tokens.push(tokens.refreshToken);
+            user.refresh_tokens.push(tokens.refreshToken);  //else, add
 
 
-        await user.save();
+        await user.save();  //  wait till user saved in DB
 
         return res.status(200).send(tokens);
         // return res.status(statusOK).send({
@@ -166,11 +170,76 @@ const login = async (req: Request, res: Response) => {
 }
 
 const logout = async (req: Request, res: Response) => {
-    res.status(statusERROR).send({ 'error': 'Not implemented' });
+    const refreshToken = getTokenFromRequest(req);
+
+    if (refreshToken == null)
+        return sendError(res, 'authentication missing');
+
+    try {
+        const user: TokenInfo = <TokenInfo>jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
+
+        const userObj = await User.findById(user.id);
+        if (userObj == null)
+            return sendError(res, 'token validation fails');
+
+        /**
+         * (suspicious attempt)
+         * if refresh_token not in db: delete r_tokens from DB. (check if refreshToken in userObj)
+         */
+        if (!userObj.refresh_tokens.includes(refreshToken)) {
+
+            userObj.refresh_tokens = [];
+            await userObj.save();
+            return sendError(res, 'token validation fails');
+        }
+
+        //  erase r_token from r_tokens list
+        userObj.refresh_tokens.splice(userObj.refresh_tokens.indexOf(refreshToken), 1)
+        //  save changes
+        await userObj.save();
+        
+        return res.status(200).send();
+    } catch (err) {
+        return sendError(res, 'token validation fails');
+    }
 }
 
-type TokenInfo = {
-    id: string
+const refresh = async (req: Request, res: Response) => {
+
+    const refreshToken = getTokenFromRequest(req);
+    if (refreshToken == null)
+        return sendError(res, 'authentication missing');
+
+    try {
+        const user: TokenInfo = <TokenInfo>jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+        const userObj = await User.findById(user.id);
+        if (userObj == null)
+            return sendError(res, 'token validation fails');
+
+        /**
+         * (suspicious attempt)
+         * if refresh_token not in db: delete r_tokens from DB. (check if refreshToken in userObj)
+         */
+        if (!userObj.refresh_tokens.includes(refreshToken)) {
+
+            userObj.refresh_tokens = [];
+            await userObj.save();
+            return sendError(res, 'token validation fails');
+        }
+
+        const tokens = await generateTokens(userObj._id.toString());
+
+        userObj.refresh_tokens[userObj.refresh_tokens.indexOf(refreshToken)] = tokens.refreshToken;
+
+        console.log("refresh token: " + refreshToken);
+        console.log("with token: " + tokens.refreshToken);
+        await userObj.save();
+
+        return res.status(200).send(tokens);
+    } catch (err) {
+        return sendError(res, 'token validation fails');
+    }
 }
 
 const authenticateMiddleware = async (req: Request, res: Response, next: NextFunction) => {
@@ -196,6 +265,6 @@ const authenticateMiddleware = async (req: Request, res: Response, next: NextFun
 
 
 
-export = { register, login, logout, authenticateMiddleware };
+export = { register, login, logout, authenticateMiddleware, refresh };
 
 

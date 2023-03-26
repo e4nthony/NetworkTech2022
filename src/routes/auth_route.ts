@@ -13,9 +13,17 @@ router.post(
     Auth.login
 );
 
-router.post(
+router.get(
     '/logout',
     Auth.logout
+);
+
+/**
+ * refresh token route
+ */
+router.get(
+    '/refresh_auth',
+    Auth.refresh
 );
 
 export = router;

@@ -26,6 +26,10 @@ afterAll(async () => {
 
 describe("Authentication Test", () => {
 
+    test("Not aquthorized attempt test", async () => {
+        const response = await request(app).get('/post');
+        expect(response.statusCode).not.toEqual(200)
+    })
 
     test("Register - add new user (user1)", async () => {
         const response = await request(app).post('/auth/register').send({
@@ -60,12 +64,35 @@ describe("Authentication Test", () => {
         expect(accessToken_temp).toBeUndefined();
     })
 
-    test("Logout - logout (user1)", async () => {
-        const response = await request(app).post('/auth/logout').send({
-            "email": User1_Mail
-        })
+    //User1 logged in
+
+    test("Post using valid access token (user1)", async () => {
+        const response = await request(app).get('/post').set('Authorization', 'JWT' + ' ' + accessToken);
         expect(response.statusCode).toEqual(200);
     })
 
+    test("Post using invalid access token (user1)", async () => {
+        const response = await request(app).get('/post').set('Authorization', 'JWT' + ' ' + '404' + accessToken);
+        expect(response.statusCode).not.toEqual(200);
+    })
+
+    /**
+     * this test cant run with actual token expiration time
+     * 
+     *
+    jest.setTimeout(15000); //milisecons
+
+    test("test expiered token", async () => {
+        await new Promise(r => setTimeout(r, 5000));
+        const response = await request(app).get('/post').set('Authorization', 'JWT ' + accessToken);
+        expect(response.statusCode).not.toEqual(200);
+    })
+    */
+
+
+    test("Logout test", async () => {
+        const response = await request(app).get('/auth/logout').set('Authorization', 'JWT' + ' ' + refreshToken)
+        expect(response.statusCode).toEqual(200)
+    })
 
 })
