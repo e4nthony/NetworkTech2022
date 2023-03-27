@@ -154,6 +154,7 @@ describe("Test of Soket.io server", () => {
     test("Test chat message from user1 to user2", (done) => {
         const message = "This is my message to user2.";
 
+        //client2 catches message
         client2_conn_info.socket.once('chat:got_message', (args) => {
             expect(args.receiver).toBe(client2_conn_info.id);
             expect(args.message).toBe(message);
