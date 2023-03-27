@@ -141,12 +141,22 @@ router.get(
  *                 description: Fails to save a post. 
  *
  */
-router.post(
-    '/',
-    Auth.authenticateMiddleware,
-    Post.addNewPost
-);
-
+// router.post(
+//     '/',
+//     Auth.authenticateMiddleware,
+//     Post.addNewPost
+// );
+router.post('/', Auth.authenticateMiddleware, async (req, res) => {
+    try {
+        const response : Response_cls = await Post.addNewPost( Request_cls.fromRestRequest(req), null)
+        response.sendRestResponse(res);
+    } catch (err) {
+        res.status(400).send({
+            'status': 'fail',
+            'message': err.message
+        })
+    }
+});
 
 /**
  * @swagger
