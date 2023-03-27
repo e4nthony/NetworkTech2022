@@ -12,6 +12,8 @@ import request from 'supertest'
 import Post from '../models/post_model'
 import User from '../models/user_model'
 
+// import MsgPackage from '../socketHandlers/chatHandler';
+
 
 const User1_Mail = 'example+1@gmail.com';
 const User1_Password = '1221ABcd!1';
@@ -108,12 +110,22 @@ describe("Test of Soket.io server", () => {
 
 
     test("echo test - from client", (done) => {
+        /**
+         * event that triggers CALLBACK :"echo:echo_res"
+         * 
+         * CALLBACK : [[[
+         * (arg) => {
+         * console.log("event: echo:echo");
+         * expect(arg.msg).toBe('hello');
+         * done(); });}  
+         * ]]]
+         */
         client1_conn_info.socket.once("echo:echo_res", (arg) => {
 
-            console.log("event: echo:echo");
+            // console.log("event: echo:echo");
 
             expect(arg.msg).toBe('hello');
-            done();
+            done();//bc not async
         });
 
         /**
@@ -139,14 +151,22 @@ describe("Test of Soket.io server", () => {
     });
 
 
-    // test("Test chat messages", (done) => {
-    //     const message = "hi... test 123"
-    //     client2_conn.socket.once('chat:message', (args) => {
-    //         expect(args.to).toBe(client2_conn.id)
-    //         expect(args.message).toBe(message)
-    //         expect(args.from).toBe(client1_conn.id)
-    //         done()
-    //     })
-    //     client1_conn.socket.emit("chat:send_message", { 'to': client2_conn.id, 'message': message })
-    // })
+    test("Test chat message from user1 to user2", (done) => {
+        const message = "This is my message to user2.";
+
+        client2_conn_info.socket.once('chat:got_message', (args) => {
+            expect(args.receiver).toBe(client2_conn_info.id);
+            expect(args.message).toBe(message);
+            expect(args.sender).toBe(client1_conn_info.id);
+            done();
+        })
+
+        // const msgPackage: MsgPackage = {
+        //     'receiver': receiver,
+        //     'sender': socket.data.user,
+        //     'message': payload.message
+        // };
+        
+        client1_conn_info.socket.emit("chat:send_message", { 'receiver': client2_conn_info.id, 'message': message })
+    })
 });

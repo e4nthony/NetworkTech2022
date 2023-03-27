@@ -12,8 +12,10 @@
 
 import http from 'http';
 import jwt from 'jsonwebtoken';
-import echoHandler from './socketHandlers/echoHandler'; // My handler
+
+import echoHandler from './socketHandlers/echoHandler';
 import postHandler from './socketHandlers/postHandler';
+import chatHandler from './socketHandlers/chatHandler';
 
 import { Server } from "socket.io";  // TAG: socket.io import
 
@@ -69,8 +71,9 @@ export = (server: http.Server) => {
          * at handlers there is functionality of server events,
          * events triggers server.io.
          */
-        echoHandler(io, socket)
-        postHandler(io, socket)
+        echoHandler(io, socket);
+        postHandler(io, socket);
+        chatHandler(io, socket);
 
         await socket.join(socket.data.user); // user id = socket.data.user
     });
