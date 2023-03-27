@@ -1,5 +1,16 @@
+/**
+ * Creates a 'app' using 'express' .
+ */
 import express from 'express'
 const app = express()
+
+/**
+ * Creates a 'http_server' using 'app' .
+ * 
+ * this file returns 'http_server' instead of just 'app'
+ */
+import http from 'http';
+const http_server = http.createServer(app);
 
 import dotenv from 'dotenv'
 dotenv.config()
@@ -43,4 +54,5 @@ if (process.env.NODE_ENV == "development") {
 }
 
 
-export = app
+// export = app //(old)
+export = http_server
