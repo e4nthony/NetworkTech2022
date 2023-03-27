@@ -114,7 +114,7 @@ router.get(
  * @swagger
  * /post:
  *   post:
- *     summary: Add a new post
+ *     summary: add a new post
  *     tags: [Post]
  *     security:
  *       - bearerAuth: []
