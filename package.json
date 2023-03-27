@@ -7,6 +7,7 @@
     "test": "tsc && jest --detectOpenHandles --forceExit ./dist/src/tests",
     "testpost": "tsc && jest --detectOpenHandles --forceExit ./dist/src/tests/post.test.js",
     "testauth": "tsc && jest --detectOpenHandles --forceExit ./dist/src/tests/auth.test.js",
+    "testsoket": "tsc && jest --detectOpenHandles --forceExit ./dist/src/tests/socket.test.js",
     "start": "tsc && node dist/src/app.js",
     "lint": "eslint . --ext .ts",
     "devstart": "nodemon ./src/app.ts"
@@ -27,7 +28,9 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.7.2"
+    "mongoose": "^6.7.2",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
