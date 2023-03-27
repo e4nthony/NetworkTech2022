@@ -7,7 +7,7 @@
     "test": "tsc && jest --detectOpenHandles --forceExit ./dist/src/tests",
     "testpost": "tsc && jest --detectOpenHandles --forceExit ./dist/src/tests/post.test.js",
     "testauth": "tsc && jest --detectOpenHandles --forceExit ./dist/src/tests/auth.test.js",
-    "testsoket": "tsc && jest --detectOpenHandles --forceExit ./dist/src/tests/socket.test.js",
+    "testsocket": "tsc && jest --detectOpenHandles --forceExit ./dist/src/tests/socket.test.js",
     "start": "tsc && node dist/src/app.js",
     "lint": "eslint . --ext .ts",
     "devstart": "nodemon ./src/app.ts"
