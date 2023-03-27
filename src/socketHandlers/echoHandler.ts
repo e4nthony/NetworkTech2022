@@ -5,9 +5,9 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events"
  * @gets io - server, socket - Socket
  */
 export = (
-          io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>,
-          socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>
-         ) => {
+    io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>,
+    socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>
+) => {
 
     /**
      * 

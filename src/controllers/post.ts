@@ -20,6 +20,16 @@ const getPostById = async (req: any, res: any) => {
     }
 }
 
+const getAllPostsEvent = async () => {
+    // console.log("");
+    try {
+        const posts = await Post.find();
+
+        return { status: 'OK', data: posts }
+    } catch (err) {
+        return { status: 'ERROR', data: "" }
+    }
+}
 
 const getAllPosts = async (req: Request, res: Response) => {
     try {
@@ -67,7 +77,7 @@ const putPostById = async (req: Request, res: Response) => {
     console.log(req.body);
 
     try {
-        const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
         console.log("post updated in db");
         res.status(statusOK).send(updatedPost);
@@ -79,6 +89,6 @@ const putPostById = async (req: Request, res: Response) => {
 }
 
 
-export = { getAllPosts, addNewPost, getPostById, putPostById };
+export = { getAllPosts, addNewPost, getPostById, putPostById, getAllPostsEvent };
 
 

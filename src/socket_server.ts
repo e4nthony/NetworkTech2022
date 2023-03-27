@@ -13,6 +13,7 @@
 import http from 'http';
 import jwt from 'jsonwebtoken';
 import echoHandler from './socketHandlers/echoHandler'; // My handler
+import postHandler from './socketHandlers/postHandler';
 
 import { Server } from "socket.io";  // TAG: socket.io import
 
@@ -68,7 +69,8 @@ export = (server: http.Server) => {
          * at handlers there is functionality of server events,
          * events triggers server.io.
          */
-        echoHandler(io, socket)    // ecoserver - respond with same message to user // moved to echoHandler
+        echoHandler(io, socket)
+        postHandler(io, socket)
 
         await socket.join(socket.data.user); // user id = socket.data.user
     });

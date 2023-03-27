@@ -58,7 +58,6 @@ const connectUser = async (userEmail, userPassword) => {
         "email": userEmail,
         "password": userPassword
     });
-
     const userId = response_reg.body._id; //ID from DB
 
     //  login user - REST API
@@ -127,15 +126,17 @@ describe("Test of Soket.io server", () => {
     });
 
 
-    // test("Post get all test", (done) => {
-    //     client1_conn.socket.once('post:get_all', (arg) => {
-    //         console.log("on any " + arg)
-    //         expect(arg.status).toBe('OK');
-    //         done();
-    //     });
-    //     console.log(" test post get all")
-    //     client1_conn.socket.emit("post:get_all", "stam")
-    // });
+    test("get all posts test", (done) => {
+
+        client1_conn_info.socket.once('post:get_all', (arg) => {
+            // console.log("on any " + arg)
+            expect(arg.status).toBe('OK');
+            done();
+        });
+
+        // console.log(" test post get all")
+        client1_conn_info.socket.emit("post:get_all", "stam")
+    });
 
 
     // test("Test chat messages", (done) => {
