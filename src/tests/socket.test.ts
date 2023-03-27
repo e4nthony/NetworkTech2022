@@ -13,62 +13,71 @@ import Post from '../models/post_model'
 import User from '../models/user_model'
 
 
-const User1_Mail = 'example@gmail.com';
-const User1_Password = '1221ABcd!';
+const User1_Mail = 'example+1@gmail.com';
+const User1_Password = '1221ABcd!1';
 
-const User2_Mail = 'example@gmail.com';
-const User2_Password = '1221ABcd!';
+const User2_Mail = 'example+2@gmail.com';
+const User2_Password = '1221ABcd!2';
 
-
+/**
+ * that type saves the connection info with client
+ * socket, accessToken, id
+ */
 type Client = {
     socket: Socket<DefaultEventsMap, DefaultEventsMap>,
     accessToken: string,
     id: string
 };
 
-let client1_conn: Client;
-let client2_conn: Client;
+let client1_conn_info: Client;
+let client2_conn_info: Client;
 
 /**
+ * async, resurns Promise
+ * 
  * @description connects client via socket, TCP connection
  * 
  * @param clientSocket 
- * @returns 
+ * @returns connected client
  */
 function clientSocketConnect(clientSocket): Promise<string> {
+
     return new Promise((resolve) => {
+
         clientSocket.on("connect", () => {
             resolve("1")
         });
-    })
-}
+
+    });
+};
 
 const connectUser = async (userEmail, userPassword) => {
 
-    //registers user
-    const response1 = await request(server).post('/auth/register').send({
+    //  registers user - REST API
+    const response_reg = await request(server).post('/auth/register').send({
         "email": userEmail,
         "password": userPassword
     });
 
-    const userId = response1.body._id
+    const userId = response_reg.body._id; //ID from DB
 
-    //login user
-    const response = await request(server).post('/auth/login').send({
+    //  login user - REST API
+    const response_login = await request(server).post('/auth/login').send({
         "email": userEmail,
         "password": userPassword
     });
-    const token = response.body.accessToken
+    const clientToken = response_login.body.accessToken;
 
-    //
-    const socket = Client('http://localhost:' + process.env.PORT, {
+    //  connect
+    const clientSocket = Client('http://localhost:' + process.env.PORT, {
         auth: {
-            token: 'barrer ' + token
+            token: 'barrer ' + clientToken
         }
-    })
-    await clientSocketConnect(socket)
-    const client = { socket: socket, accessToken: token, id: userId }
-    return client
+    });
+    await clientSocketConnect(clientSocket);
+
+    const client: Client = { socket: clientSocket, accessToken: clientToken, id: userId };
+    return client;
 }
 
 /**
@@ -76,19 +85,19 @@ const connectUser = async (userEmail, userPassword) => {
  * connects 2 users via sockets
  */
 beforeAll(async () => {
-    await Post.remove()
-    await User.remove()
-    client1_conn = await connectUser(User1_Mail, User1_Password)
-    client2_conn = await connectUser(User2_Mail, User2_Password)
-    console.log("finish beforeAll")
+    await Post.remove();
+    await User.remove();
+    client1_conn_info = await connectUser(User1_Mail, User1_Password);
+    client2_conn_info = await connectUser(User2_Mail, User2_Password);
+    console.log("finish beforeAll");
 });
 
 /**
  * closes connections
  */
 afterAll(() => {
-    client1_conn.socket.close();
-    client2_conn.socket.close();
+    client1_conn_info.socket.close();
+    client2_conn_info.socket.close();
 
     server.close(); // http_server connection close
     mongoose.connection.close();    //
@@ -99,8 +108,8 @@ describe("Test of Soket.io server", () => {
 
 
 
-    test("echo test", (done) => {
-        client1_conn.socket.once("echo:echo_res", (arg) => {
+    test("echo test - from client", (done) => {
+        client1_conn_info.socket.once("echo:echo_res", (arg) => {
 
             console.log("event: echo:echo");
 
@@ -109,12 +118,12 @@ describe("Test of Soket.io server", () => {
         });
 
         /**
-         * send message to client using server.io 
+         * send message from client to server.io using socket saved in client1_conn_info
          * 
          * @sendParams : "echo:echo" - event name ,
          *               { 'msg': 'hello' } - parameters dictionary/JSON
          */
-        client1_conn.socket.emit("echo:echo", { 'msg': 'hello' })
+        client1_conn_info.socket.emit("echo:echo", { 'msg': 'hello' });
     });
 
 
