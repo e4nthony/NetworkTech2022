@@ -67,7 +67,7 @@ const putPostById = async (req: Request, res: Response) => {
     console.log(req.body);
 
     try {
-        const updatedPost = await Post.findByIdAndUpdate(req.params.id);
+        const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
         console.log("post updated in db");
         res.status(statusOK).send(updatedPost);
