@@ -2,7 +2,7 @@ class Request_cls {
     body = {};
     userId = null;
 
-    constructor(body, userId) {
+    constructor(body: any, userId: string) {
         this.body = body
         this.userId = userId
     }

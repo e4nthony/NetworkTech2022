@@ -57,7 +57,7 @@ const getAllPosts = async (req: Request, res: Response) => {
  * @param res : Response
  * @returns Response_cls
  */
-const addNewPost = async (req: Request, res: Response = null) => {
+const addNewPost = async (req: Request) => {
     console.log("addNewPost' request body:" + req.body.toString)
 
     const post = new Post({
@@ -78,7 +78,8 @@ const addNewPost = async (req: Request, res: Response = null) => {
     }
     catch (err) {
         console.log("failed to save post in DB (addNewPost())");
-        res.status(statusERROR).send({ 'error': 'fail adding new post to db' });
+        return new Response_cls(null, req.body.sender, new Error_cls(400, err.message))
+        // res.status(statusERROR).send({ 'error': 'fail adding new post to db' });
     }
 }
 

@@ -3,9 +3,10 @@ class Response_cls {
     userId = null;
     err = null;
 
-    constructor(body, userId, err) {
+    constructor(body, userId, err: Error_cls = null) {
         this.body = body
         this.userId = userId
+        this.err = err;
     }
 
     sendRestResponse(res) {
