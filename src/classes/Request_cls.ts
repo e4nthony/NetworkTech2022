@@ -8,7 +8,7 @@ class Request_cls {
     }
 
     //constructor
-    static fromRestRequest(req) {
+    public static fromRestRequest(req) {
         return new Request_cls(req.body, req.user._id)
     }
 }

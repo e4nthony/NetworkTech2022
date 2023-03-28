@@ -151,7 +151,7 @@ router.get(
 // );
 router.post('/', Auth.authenticateMiddleware, async (req, res) => {
     try {
-        const response : Response_cls = await Post.addNewPost(Request_cls.fromRestRequest(req),null);
+        const response : Response_cls = await Post.addNewPost(Request_cls.fromRestRequest(req));
         response.sendRestResponse(res);
     } catch (err) {
         res.status(400).send({

@@ -57,7 +57,7 @@ const getAllPosts = async (req: Request, res: Response) => {
  * @param res : Response
  * @returns Response_cls
  */
-const addNewPost = async (req: Request) => {
+const addNewPost = async (req: Request | Request_cls) => {
     console.log("addNewPost' request body:" + req.body.toString)
 
     const post = new Post({
