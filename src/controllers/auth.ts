@@ -104,8 +104,7 @@ const register = async (req: Request, res: Response) => {
 
         return res.status(statusOK).send({
             'email': email,
-            '_id': newUser._id,  // id of Object in DB
-            newUser //todo delete TAG: DEBUG
+            '_id': newUser._id,
         })
         // return res.status(statusOK).send({ // Debug purposes only
         //     newUser
@@ -158,15 +157,17 @@ const login = async (req: Request, res: Response) => {
         await user.save();  //  wait till user saved in DB
         // await user.findOneAndUpdate();  //  wait till user saved in DB
         // await user.update();  //  wait till user saved in DB
-        
 
-        return res.status(200).send(tokens);
-        // return res.status(statusOK).send({
-        //     //'email': email
-        //     // '_id' : newUser._id  // id of Object in DB
-        //     // 'message': 'login successful'
-        //     tokens
-        // })
+
+        let id = user._id; 
+        //there is email
+        let name = user.name; 
+        //pasword dont need
+        let imageUrl = user.imageUrl; 
+
+        const userData =  { id, email, name, imageUrl, tokens }  //pack data as UserData type at app
+
+        return res.status(statusOK).send(userData);
     } catch (err) {
         /**
          * expected error:
