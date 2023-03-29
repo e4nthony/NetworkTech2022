@@ -9,6 +9,9 @@ import express from 'express'
 const router = express.Router()
 import Post from '../controllers/post.js'
 import Auth from '../controllers/auth.js'
+// import Response_cls from '../classes/Response_cls.js'
+// import { Response_cls } from "../classes/Response_cls";
+// import { Request_cls } from "../classes/Request_cls";
 
 /**
 * @swagger
@@ -146,7 +149,17 @@ router.post(
     Auth.authenticateMiddleware,
     Post.addNewPost
 );
-
+// router.post('/', Auth.authenticateMiddleware, async (req, res) => {
+//     try {
+//         const response : Response_cls = await Post.addNewPost(Request_cls.fromRestRequest(req));
+//         response.sendRestResponse(res);
+//     } catch (err) {
+//         res.status(400).send({
+//             'status': 'fail',
+//             'message': err.message
+//         })
+//     }
+// });
 
 /**
  * @swagger

@@ -16,6 +16,7 @@ import jwt from 'jsonwebtoken';
 import echoHandler from './socketHandlers/echoHandler';
 import postHandler from './socketHandlers/postHandler';
 import chatHandler from './socketHandlers/chatHandler';
+import userHandler from './socketHandlers/userHandler';
 
 import { Server } from "socket.io";  // TAG: socket.io import
 
@@ -72,6 +73,7 @@ export = (server: http.Server) => {
          * events triggers server.io.
          */
         echoHandler(io, socket);
+        userHandler(io, socket);
         postHandler(io, socket);
         chatHandler(io, socket);
 

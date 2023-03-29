@@ -114,3 +114,48 @@ Content-Type: application/json
     "message": "This is authorized user's post",
     "sender": "000111"
 }
+
+# ----------------------Requests from app--------------------------------------------
+### register request
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+    "_id": "",
+    "email": "example+beka@gmail.com",
+    "name": "Beka A",
+    "password": "1234callme",
+    "imageUrl": ""
+}
+
+### login request - email, password
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+    "email": "example+beka@gmail.com",
+    "password": "1234callme"
+}
+
+# ### login request - by token - NEED UPDATE TOKEN ACCORDING TO RESPONSE FROM REGISTRATION
+# POST http://localhost:4000/auth/login
+# Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjM5Y2JjZDQyODRiNjQwZDhmZWMyZSIsImlhdCI6MTY4MDA1NTQ5NCwiZXhwIjoxNjgwMDc3MDk0fQ.elPCCy3RKReJmUsCdzHLkMZEy2NRWTBIIXaqlAtw-Zw
+
+### logout request
+POST http://localhost:4000/auth/logout 
+Content-Type: application/json
+
+{
+    "email": "example@gmail.com"
+}
+
+#--------------------------------
+### post request with JSON Body (new)
+POST http://localhost:4000/post
+Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjM5Y2JjZDQyODRiNjQwZDhmZWMyZSIsImlhdCI6MTY4MDA1NTQ5NCwiZXhwIjoxNjgwMDc3MDk0fQ.elPCCy3RKReJmUsCdzHLkMZEy2NRWTBIIXaqlAtw-Zw
+Content-Type: application/json 
+
+{
+    "message": "This is authorized user's post",
+    "sender": "000111"
+}

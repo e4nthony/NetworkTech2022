@@ -60,8 +60,12 @@ function getTokenFromRequest(req: Request): string {
 // requests list :
 
 const register = async (req: Request, res: Response) => {
+
+    // const _id = req.body._id;
     const email = req.body.email;
+    const name = req.body.name;
     const password = req.body.password;
+    const imageUrl = req.body.imageUrl;
 
     if (email == null) {
         return sendError(res, 'Epmty email');
@@ -89,15 +93,19 @@ const register = async (req: Request, res: Response) => {
 
         //  save user to db:
         const newUser = new User({
+            // '_id': null,
             'email': email,
-            'password': encryptedPassword
+            "name": name,
+            'password': encryptedPassword,
+            "imageUrl": imageUrl
         });
+
         await newUser.save();
 
         return res.status(statusOK).send({
             'email': email,
             '_id': newUser._id,  // id of Object in DB
-            newUser //todo delete
+            newUser //todo delete TAG: DEBUG
         })
         // return res.status(statusOK).send({ // Debug purposes only
         //     newUser
@@ -114,10 +122,10 @@ const login = async (req: Request, res: Response) => {
     const password = req.body.password;
 
     if (email == null) { //todo delete double check 
-        return sendError(res, 'Epmty email');
+        return sendError(res, 'Invalid email or password'); //   Epmty email
     }
     else if (password == null) {
-        return sendError(res, 'Epmty password');
+        return sendError(res, 'Invalid email or password'); //   Epmty password
     }
     //else if (password cahracters count > 16){ //todo 
     //    return sendError(res, 'Invalid password: max length = 16');
@@ -148,6 +156,9 @@ const login = async (req: Request, res: Response) => {
 
 
         await user.save();  //  wait till user saved in DB
+        // await user.findOneAndUpdate();  //  wait till user saved in DB
+        // await user.update();  //  wait till user saved in DB
+        
 
         return res.status(200).send(tokens);
         // return res.status(statusOK).send({
@@ -197,7 +208,7 @@ const logout = async (req: Request, res: Response) => {
         userObj.refresh_tokens.splice(userObj.refresh_tokens.indexOf(refreshToken), 1)
         //  save changes
         await userObj.save();
-        
+
         return res.status(200).send();
     } catch (err) {
         return sendError(res, 'token validation fails');
