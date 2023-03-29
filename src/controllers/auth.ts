@@ -159,13 +159,18 @@ const login = async (req: Request, res: Response) => {
         // await user.update();  //  wait till user saved in DB
 
 
-        let id = user._id; 
+        let id = user._id;
         //there is email
-        let name = user.name; 
+        let name = user.name;
         //pasword dont need
-        let imageUrl = user.imageUrl; 
+        let imageUrl = user.imageUrl;
 
-        const userData =  { id, email, name, imageUrl, tokens }  //pack data as UserData type at app
+        const userData = {
+            'id': id, 'email': email, 'name': name,
+            'imageUrl': imageUrl,
+            'refreshToken': tokens.refreshToken,
+            'accessToken': tokens.accessToken
+        }  //pack data as UserData type at app
 
         return res.status(statusOK).send(userData);
     } catch (err) {
