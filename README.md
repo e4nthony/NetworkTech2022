@@ -1,6 +1,10 @@
-# NetworkTech2022
+# Network Technologies Course 2022 - MERN Stack - Backend
 
-**Program works only with Node v16.15.0 !** <sub>(fails to connect to DB with newer versions)</sub>
+### Tools:
+JavaScript, React, Node.js, Express.js, MongoDB, TypeScript
+
+> [!NOTE]
+> Program works only with Node v16.15.0 ! <sub>(fails to connect to DB with newer versions)</sub>
 
 ### Requirements 
 \- install Node.js    
@@ -9,7 +13,11 @@
 ### Use
 Start program on Windows using git-bash terminal:   
 
-\- (Install NVM) <sub>// nvm I have used: https://github.com/coreybutler/nvm-windows</sub>\
-\- `nvm install 16.15.0`\
-\- `npm start`
+1. Install NVM - ( nvm I have used: https://github.com/coreybutler/nvm-windows )
+2. ```git-bash
+   nvm install 16.15.0
+   ```
+3. ```
+   npm start
+   ```
 
